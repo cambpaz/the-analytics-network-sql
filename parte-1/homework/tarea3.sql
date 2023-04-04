@@ -2,8 +2,9 @@
 --"Unknown" cuando no hay un color disponible
 SELECT * FROM stg.product_master
 
-SELECT nombre, codigo_producto, categoria, COALESCE(color, 'Unknown') FROM stg.product_master
-WHERE nombre LIKE '%PHILIPS%' OR nombre like '%Samsung%' or nombre like '%SAMSUNG%'
+SELECT nombre, codigo_producto, categoria, COALESCE(color, 'Unknown') 
+FROM stg.product_master 
+WHERE UPPER(nombre) LIKE UPPER('%PHILIPS%') OR UPPER(nombre) LIKE UPPER('%SAMSUNG%');
 
 -- Calcular las ventas brutas y los impuestos pagados por pais y provincia en la moneda correspondiente.
 SELECT * FROM stg.order_line_sale 
