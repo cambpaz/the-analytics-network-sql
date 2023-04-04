@@ -45,7 +45,7 @@ SELECT tienda, DATE(fecha::TEXT) as fecha, conteo FROM stg.super_store_count
 
 --Cuales son los productos disponibles para la venta (activos) de la marca Phillips?
 SELECT * FROM stg.product_master
-WHERE is_active = true AND nombre LIKE '%PHILIPS%'
+WHERE is_active = true AND UPPER(nombre) LIKE UPPER('%PHILIPS%')
 
 --Obtener el monto vendido por tienda y moneda y ordenarlo de mayor a menor por valor nominal.
 SELECT tienda, moneda, sum(venta) as monto_vendido FROM stg.order_line_sale
