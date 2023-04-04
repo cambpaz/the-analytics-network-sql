@@ -128,7 +128,7 @@ SELECT orden, producto, subsubcategoria, SUM(cantidad) cant_vend
 FROM stg.order_line_sale s
 LEFT JOIN stg.product_master pm
 ON pm.codigo_producto = s.producto
-GROUP BY orden, producto, subsubcategoria
+GROUP BY 1, 2 ,3
 ORDER BY orden
 
 
