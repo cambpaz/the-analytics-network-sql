@@ -113,7 +113,7 @@ SELECT
 	venta_usd, 
 	descuento_usd, 
 	costo_promedio_usd,
-	(venta_usd + descuento_usd) - costo_promedio_usd
+	(venta_usd + COALESCE(descuento_usd, 0)) - costo_promedio_usd
 FROM ventas_usd v
 LEFT JOIN stg.cost c
 ON c.codigo_producto = v.producto
