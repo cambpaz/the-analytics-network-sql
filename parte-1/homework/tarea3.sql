@@ -10,7 +10,7 @@ WHERE UPPER(nombre) LIKE UPPER('%PHILIPS%') OR UPPER(nombre) LIKE UPPER('%SAMSUN
 SELECT * FROM stg.order_line_sale 
 SELECT * FROM stg.store_master 
 
-SELECT pais, provincia, SUM(venta) as ventas_brutas, SUM(impuestos) AS impuestos, moneda FROM stg.order_line_sale AS ols
+SELECT pais, provincia, SUM(venta) as ventas_brutas, SUM(COALESCE(impuestos, 0)) AS impuestos, moneda FROM stg.order_line_sale AS ols
 LEFT JOIN stg.store_master as sm
 ON sm.codigo_tienda = ols.tienda
 GROUP BY pais, provincia, moneda
