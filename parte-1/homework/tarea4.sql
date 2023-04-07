@@ -73,3 +73,11 @@ FROM stg.cost
 
 SELECT * FROM bkp.cost
 -- El cambio en la tabla "order_line_sale" en el punto 6 fue un error y debemos volver la tabla a su estado original, como lo harias?
+
+-- Por lo investigado se deberia realizar un SAVEPOINT antes de eliminar los registros, y luego hacer un ROLLBACK a ese SAVEPOINT, quedaria algo asi:
+SAVEPOINT sp_before_deleting;
+
+-- Modificamos la tabla order_line_sale
+
+-- Si deseamos deshacer solo los cambios posteriores a la modificación:
+ROLLBACK TO sp_before_deleting;
