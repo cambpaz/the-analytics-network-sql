@@ -26,9 +26,9 @@ SELECT DISTINCT descuento/venta AS descuento, tienda FROM stg.order_line_sale
 WHERE descuento IS NOT null
 
 --Cual es el inventario promedio por dia que tiene cada tienda?
-SELECT AVG(final) AS promedio, fecha, tienda FROM stg.inventory
-GROUP BY fecha, tienda
-ORDER BY tienda, fecha
+SELECT fecha, tienda, AVG(final) AS promedio FROM stg.inventory
+GROUP BY 1, 2
+ORDER BY 2, 1
 
 --Obtener las ventas netas y el porcentaje de descuento otorgado por producto en Argentina.
 SELECT producto, venta - impuestos AS venta_neta, descuento/venta as por_descuento
