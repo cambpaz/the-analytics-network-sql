@@ -150,6 +150,27 @@ GROUP BY 1, 2
 ORDER BY 1, 2
 ;
 
+-- ROI = VENTAS / INVENTARIO 
+SELECT 
+  pm.categoria,
+  TO_CHAR(s.fecha, 'YYYY-MM') mes,
+  SUM(CASE
+		 	WHEN moneda = 'ARS' THEN venta / cotizacion_usd_peso
+    		WHEN moneda = 'EUR' THEN venta * cotizacion_usd_eur
+    		ELSE venta / cotizacion_usd_uru END) / SUM(((inv.inicial+inv.final)/ 2) * COALESCE(c.costo_promedio_usd, 0)) ROI
+FROM stg.order_line_sale s
+LEFT JOIN stg.monthly_average_fx_rate fx
+ON TO_CHAR(s.fecha, 'YYYY-MM') = TO_CHAR(fx.mes, 'YYYY-MM')
+LEFT JOIN stg.cost c
+ON s.producto = c.codigo_producto
+LEFT JOIN stg.inventory inv
+ON s.producto = inv.sku
+LEFT JOIN stg.product_master pm
+ON s.producto = pm.codigo_producto
+GROUP BY 1, 2
+ORDER BY 1, 2
+;
+
 -- AOV (Average order value), valor promedio de la orden.
 
 SELECT SUM(
